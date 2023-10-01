@@ -1,4 +1,4 @@
-package com.example.laboratorio7_networking.ui.categories.categories
+package com.example.laboratorio7_networking.ui.categories.view
 
 import androidx.lifecycle.ViewModel
 import com.example.laboratorio7_networking.networking.response.MealsRecipesResponse

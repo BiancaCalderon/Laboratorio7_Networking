@@ -53,7 +53,7 @@ dependencies {
 
     val nav_version = "2.5.3"
     val accompanist_version = "0.32.0"
-    implementation ("io.coil-kt:coil:1.4.0")
+    implementation ("io.coil-kt:coil-compose:1.3.2")
 
 
     implementation("com.google.accompanist:accompanist-pager:$accompanist_version")
