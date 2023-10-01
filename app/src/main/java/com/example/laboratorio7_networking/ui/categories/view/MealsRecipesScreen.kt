@@ -1,3 +1,5 @@
+package com.example.laboratorio7_networking.ui.categories.view
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,6 +23,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.Image
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import coil.compose.rememberImagePainter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -29,33 +35,50 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.laboratorio7_networking.navigation.NavigationState
+import com.example.laboratorio7_networking.networking.response.MealsRecipesResponse
 
 import com.example.laboratorio7_networking.networking.response.RecipeResponse
 import com.example.laboratorio7_networking.ui.categories.view.MealsRecipesViewModel
+
+
 
 @Composable
 fun MealsRecipeScreen(categoryId: String, navController: NavController) {
     val viewModel: MealsRecipesViewModel = viewModel()
     val rememberedMeals: MutableState<List<RecipeResponse>> = remember { mutableStateOf(emptyList()) }
 
-    viewModel.getMealsRecipe(categoryId) { response ->
-        if (response != null) {
-            rememberedMeals.value = response.recipes.orEmpty()
+    LaunchedEffect(categoryId) {
+        viewModel.getMealsRecipe(categoryId) { response ->
+            if (response != null) {
+                rememberedMeals.value = response.recipes.orEmpty()
+            }
         }
     }
 
     Column(
-        modifier = Modifier.fillMaxWidth().background(Color.Black),
+        modifier = Modifier.fillMaxSize().background(Color.Gray),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        IconButton(
+            onClick = {
+                navController.popBackStack()
+            },
+            modifier = Modifier
+                .align(Alignment.Start)
+        ) {
+            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
+        }
         Text(
             text = "Category $categoryId",
             modifier = Modifier.padding(2.dp),
             style = MaterialTheme.typography.h6,
-            color = Color.White
+            color = Color.Black
         )
 
-        LazyColumn {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
             items(rememberedMeals.value) { meal ->
                 MealsInCategoryCard(meal, navController)
             }
@@ -64,37 +87,22 @@ fun MealsRecipeScreen(categoryId: String, navController: NavController) {
 }
 
 @Composable
-fun MealsInCategoryCard(recipeResponse: RecipeResponse, navController: NavController) {
+fun MealsInCategoryCard(recipe: RecipeResponse, navController: NavController) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
             .clickable {
-                navController.navigate("${NavigationState.Detail.route}/${recipeResponse.id}")
+                navController.navigate("${NavigationState.Recipe.route}/${recipe.id}")
             },
     ) {
-        Surface(
+        Column(
             modifier = Modifier
-                .padding(8.dp)
-                .clip(RoundedCornerShape(8.dp))
-                .fillMaxWidth(0.5f)
-                .aspectRatio(1f)
+                .padding(16.dp)
+                .fillMaxWidth()
         ) {
-            Image(
-                painter = rememberImagePainter(recipeResponse.imageUrl),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.Crop
-            )
-            Text(
-                text = recipeResponse.name,
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp,
-                textAlign = TextAlign.Left,
-                modifier = Modifier.padding(8.dp)
-            )
+            Text(text = recipe.name, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }

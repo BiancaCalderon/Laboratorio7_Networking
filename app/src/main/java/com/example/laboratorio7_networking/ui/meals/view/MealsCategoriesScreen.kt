@@ -55,7 +55,8 @@ fun MealsCategoriesScreen(navController: NavController) {
                         .fillMaxWidth()
                         .padding(16.dp)
                         .clickable {
-                            navController.navigate(NavigationState.Recipe.route + "/${meal.id}")
+                            // Navigate to MealsRecipeScreen when a category is clicked
+                            navController.navigate("${NavigationState.Recipe.route}/${meal.id}")
                         }
                 ) {
                     // Load the image using Coil and rememberImagePainter
@@ -89,4 +90,3 @@ fun MealsCategoriesScreen(navController: NavController) {
         }
     }
 }
-

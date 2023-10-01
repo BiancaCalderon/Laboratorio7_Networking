@@ -3,7 +3,7 @@ package com.example.laboratorio7_networking.networking.response
 import com.google.gson.annotations.SerializedName
 
 
-data class MealsRecipesResponse(val recipes: List<RecipeResponse>)
+data class MealsRecipesResponse(@SerializedName("meals") val recipes: List<RecipeResponse>)
 
 data class RecipeResponse(
     @SerializedName("idMeal") val id: String,
