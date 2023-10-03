@@ -3,7 +3,11 @@ package com.example.laboratorio7_networking.ui.meals.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -43,23 +47,35 @@ fun MealsCategoriesScreen(navController: NavController) {
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color.White
+        color = Color.Black
     ) {
-        LazyColumn(
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text(
+                text = "Meals",
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+
+            LazyColumn(
             modifier = Modifier.fillMaxSize()
         ) {
             items(rememberedMeals.value) { meal ->
-                // Display the item with a colored background
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
                         .clickable {
-                            // Navigate to MealsRecipeScreen when a category is clicked
-                            navController.navigate("${NavigationState.Recipe.route}/${meal.id}")
+                            // Navigate
+                            navController.navigate("${NavigationState.Recipe.route}/${meal.name}")
                         }
                 ) {
-                    // Load the image using Coil and rememberImagePainter
+
                     Image(
                         painter = rememberImagePainter(meal.imageUrl),
                         contentDescription = meal.name,
@@ -70,10 +86,9 @@ fun MealsCategoriesScreen(navController: NavController) {
                         contentScale = ContentScale.Crop
                     )
 
-                    // Display the category name and description
                     Text(
                         text = meal.name,
-                        color = Color.Black,
+                        color = Color.White,
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp,
                         modifier = Modifier.padding(top = 8.dp)
@@ -81,7 +96,7 @@ fun MealsCategoriesScreen(navController: NavController) {
 
                     Text(
                         text = meal.description,
-                        color = Color.Black,
+                        color = Color.White,
                         fontSize = 16.sp,
                         modifier = Modifier.padding(top = 8.dp)
                     )
@@ -90,3 +105,4 @@ fun MealsCategoriesScreen(navController: NavController) {
         }
     }
 }
+    }
