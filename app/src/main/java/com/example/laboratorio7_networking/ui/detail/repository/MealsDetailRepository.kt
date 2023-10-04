@@ -2,28 +2,26 @@ package com.example.laboratorio7_networking.ui.detail.repository
 
 import com.example.laboratorio7_networking.networking.MealsWebService
 import com.example.laboratorio7_networking.networking.response.MealsDetailResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-
-
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 
 class MealsDetailRepository(private val webService: MealsWebService = MealsWebService()) {
-    fun getMealById(recipeId: String, successCallback: (response: MealsDetailResponse?) -> Unit) {
-        webService.getMealById(recipeId).enqueue(object : Callback<MealsDetailResponse> {
-            override fun onResponse(
-                call: Call<MealsDetailResponse>,
-                response: Response<MealsDetailResponse>
-            ) {
-                if (response.isSuccessful)
-                    successCallback(response.body())
-            }
 
-            override fun onFailure(call: Call<MealsDetailResponse>, t: Throwable) {
-                // TODO treat failure
+    suspend fun getMealById(recipeId: String): MealsDetailResponse? {
+        println("Attempting to fetch meal detail with recipeId: $recipeId")
+        println("URL: https://www.themealdb.com/api/json/v1/1/lookup.php?i=$recipeId")
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = webService.getMealById(recipeId)
+                println("Response: $response")
+                response
+            } catch (e: Exception) {
+                println("Error: ${e.localizedMessage}")
+                null
             }
-        })
+        }
     }
 }
+
 

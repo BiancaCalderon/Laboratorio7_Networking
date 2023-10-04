@@ -1,9 +1,7 @@
 package com.example.laboratorio7_networking.ui.categories.repository
 
-import android.util.Log
 import com.example.laboratorio7_networking.networking.MealsWebService
 import com.example.laboratorio7_networking.networking.response.MealsRecipesResponse
-
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,7 +18,6 @@ fun getMealsRecipe(categoryId: String, successCallback: (response: MealsRecipesR
         }
 
         override fun onFailure(call: Call<MealsRecipesResponse>, t: Throwable) {
-            Log.d("HERE", call.toString())
             // TODO treat failure
         }
     })

@@ -39,7 +39,8 @@ class MealsWebService {
     fun getMealsRecipe(categoryId: String): Call<MealsRecipesResponse> {
         return api.getMealsRecipe("$categoryId")
     }
-    fun getMealById(recipeId: String): Call<MealsDetailResponse> {
+    suspend fun getMealById(recipeId: String): MealsDetailResponse? {
         return api.getMealById(recipeId)
     }
+
 }

@@ -2,7 +2,8 @@ package com.example.laboratorio7_networking.networking.response
 
 import com.google.gson.annotations.SerializedName
 
-data class MealsDetailResponse(val detail: List<DetailResponse>)
+data class MealsDetailResponse( @SerializedName("meals") val meals: List<DetailResponse>?)
+
 
 data class DetailResponse(
     @SerializedName("idMeal") val id: String,
