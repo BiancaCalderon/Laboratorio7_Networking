@@ -56,17 +56,20 @@ fun MealsRecipeScreen(categoryId: String?, navController: NavController) {
     }
 
     Column(
-        modifier = Modifier.fillMaxSize().background(Color.White),
+        modifier = Modifier.fillMaxSize().background(Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         IconButton(
-            onClick = {
-                navController.popBackStack()
-            },
             modifier = Modifier
-                .align(Alignment.Start)
+                .fillMaxWidth()
+                .padding(8.dp),
+            onClick =  {navController.popBackStack()},
         ) {
-            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = null,
+                tint = Color.White
+            )
         }
         Text(
             text = "Category $categoryId",
@@ -105,7 +108,7 @@ fun CategoryCard(recipe: RecipeResponse, navController: NavController) {
             .fillMaxWidth()
             .padding(8.dp)
             .clickable {
-                navController.navigate("${NavigationState.Recipe.route}/${recipe.id}")
+                navController.navigate("${NavigationState.Detail.route}/${recipe.id}")
             },
     ) {
         Column(

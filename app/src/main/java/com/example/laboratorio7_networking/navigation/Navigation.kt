@@ -1,5 +1,6 @@
 package com.example.laboratorio7_networking.navigation
 
+import MealsDetailScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -12,10 +13,11 @@ import com.example.laboratorio7_networking.ui.meals.view.MealsCategoriesScreen
 @Composable
 fun Navigation(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
-    NavHost(navController = navController,
+    NavHost(
+        navController = navController,
         startDestination = NavigationState.Meals.route,
-        modifier = modifier) {
-
+        modifier = modifier
+    ) {
         composable(route = NavigationState.Meals.route) {
             MealsCategoriesScreen(navController)
         }
@@ -23,8 +25,15 @@ fun Navigation(modifier: Modifier = Modifier) {
             val categoryId = backStackEntry.arguments?.getString("categoryId") ?: ""
             MealsRecipeScreen(categoryId, navController)
         }
-
-
+        composable(route = "${NavigationState.Detail.route}/{recipeId}") { backStackEntry ->
+            val recipeId = backStackEntry.arguments?.getString("recipeId") ?: ""
+            MealsDetailScreen(recipeId, navController)
+        }
     }
-   }
+}
+
+
+
+
+
 
