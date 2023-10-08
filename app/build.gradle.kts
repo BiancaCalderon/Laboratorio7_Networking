@@ -53,7 +53,7 @@ dependencies {
 
     val nav_version = "2.5.3"
     val accompanist_version = "0.32.0"
-    implementation ("io.coil-kt:coil-compose:1.3.2")
+    implementation ("io.coil-kt:coil-compose:1.4.0")
 
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.3")
 

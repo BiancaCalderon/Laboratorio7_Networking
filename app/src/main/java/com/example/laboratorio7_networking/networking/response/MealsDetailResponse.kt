@@ -7,7 +7,7 @@ data class MealsDetailResponse( @SerializedName("meals") val meals: List<DetailR
 
 data class DetailResponse(
     @SerializedName("idMeal") val id: String,
-    @SerializedName("strCategory") val category: String,
+    @SerializedName("strCategory") val Category: String,
     @SerializedName("strInstructions") val instruction: String,
     @SerializedName("strMeal") val name: String,
     @SerializedName("strArea") val strArea: String,

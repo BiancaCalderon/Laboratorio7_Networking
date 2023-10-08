@@ -17,6 +17,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -39,7 +40,6 @@ import com.example.laboratorio7_networking.navigation.NavigationState
 import com.example.laboratorio7_networking.networking.response.RecipeResponse
 
 
-
 @Composable
 fun MealsRecipeScreen(categoryId: String?, navController: NavController) {
     val viewModel: MealsRecipesViewModel = viewModel()
@@ -59,24 +59,30 @@ fun MealsRecipeScreen(categoryId: String?, navController: NavController) {
         modifier = Modifier.fillMaxSize().background(Color.Black),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        IconButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            onClick =  {navController.popBackStack()},
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = null,
-                tint = Color.White
-            )
-        }
-        Text(
-            text = "Category $categoryId",
-            modifier = Modifier.padding(2.dp),
-            style = MaterialTheme.typography.h6,
-            color = Color.Black
+        TopAppBar(
+            title = {
+                Text(
+                    text = "Category $categoryId",
+                    style = MaterialTheme.typography.h6.copy(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                )
+            },
+            navigationIcon = {
+                IconButton(
+                    onClick = { navController.popBackStack() }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = null,
+                        tint = Color.White
+                    )
+                }
+            }
         )
+
         rememberedMeals.value?.let { meals ->
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
@@ -86,11 +92,10 @@ fun MealsRecipeScreen(categoryId: String?, navController: NavController) {
                 }
             }
         } ?: run {
-
             Text(
                 text = "No meals available for this category ;(",
                 modifier = Modifier.padding(16.dp),
-                fontSize = 16.sp,
+                fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 color = Color.Gray
@@ -98,8 +103,6 @@ fun MealsRecipeScreen(categoryId: String?, navController: NavController) {
         }
     }
 }
-
-
 
 @Composable
 fun CategoryCard(recipe: RecipeResponse, navController: NavController) {
@@ -110,6 +113,8 @@ fun CategoryCard(recipe: RecipeResponse, navController: NavController) {
             .clickable {
                 navController.navigate("${NavigationState.Detail.route}/${recipe.id}")
             },
+        elevation = 4.dp,
+        shape = RoundedCornerShape(8.dp)
     ) {
         Column(
             modifier = Modifier
@@ -130,11 +135,18 @@ fun CategoryCard(recipe: RecipeResponse, navController: NavController) {
                     .fillMaxWidth()
                     .height(200.dp)
                     .clip(shape = RoundedCornerShape(8.dp))
-
             )
+
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = recipe.name, fontWeight = FontWeight.Bold)
+
+            Text(
+                text = recipe.name,
+                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.h6.copy(
+                    fontSize = 16.sp,
+                    color = Color.Black
+                )
+            )
         }
     }
 }
-
